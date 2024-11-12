@@ -1,4 +1,4 @@
-# COE2SH4-PPA3Template
+# COE2SH4 - Course Project Template
 Course Project
 
 You must watch the briefing video and read through the manual to engage in the development activities.
