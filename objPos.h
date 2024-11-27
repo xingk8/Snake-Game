@@ -19,6 +19,13 @@ class objPos
         
         // Respect the rule of six / minimum four
         // [TODO] Implement the missing special member functions to meet the minimum four rule
+
+        // Copy Constructor 
+        objPos(const objPos &position);
+
+        // Copy Assignemnt Operator
+        objPos& operator=(const objPos &position);
+        bool operator==(const objPos &other);
         
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
@@ -28,6 +35,11 @@ class objPos
         char getSymbolIfPosEqual(const objPos* refPos) const;
         
         bool isPosEqual(const objPos* refPos) const;
+        void incX();
+        void decX();
+        void incY();
+        void decY();
+        ~objPos();
 };
 
 #endif

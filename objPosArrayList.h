@@ -17,10 +17,13 @@ class objPosArrayList
         ~objPosArrayList();
 
         int getSize() const;
+        void doubleSize();
         void insertHead(objPos thisPos);
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
+        objPosArrayList(const objPosArrayList &obj);
+        objPosArrayList& operator=(const objPosArrayList &obj);
         
         objPos getHeadElement() const;
         objPos getTailElement() const;

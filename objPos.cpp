@@ -1,4 +1,6 @@
 #include "objPos.h"
+#include <cstddef>
+
 
 objPos::objPos()
 {
@@ -20,7 +22,28 @@ objPos::objPos(int xPos, int yPos, char sym)
 // [TODO] Implement the missing special member functions to meet the minimum four rule
 
 
+// Copy Constructor
+objPos::objPos(const objPos& position){
+    this -> symbol = position.symbol;
+    this -> pos = new Pos;
+    pos -> x = position.pos -> x; 
+    pos -> y = position.pos -> y;
+}   
 
+// Copy Assignment Operator
+objPos& objPos::operator=(const objPos &position){
+    
+    if(this != &position){
+        this -> symbol = position.symbol;
+        pos -> x = position.pos -> x; 
+        pos -> y = position.pos -> y;}
+    return *this; 
+}
+ 
+bool objPos::operator==(const objPos &other){
+     return this->pos->x == other.pos->x &&
+            this->pos->y == other.pos->y;
+}
 
 void objPos::setObjPos(objPos o)
 {
@@ -63,3 +86,23 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos) const
     else
         return 0;
 }
+
+void objPos::incX(){
+    (pos -> x)++;
+}
+
+void objPos::decX(){
+    (pos -> x)--;
+}
+void objPos::incY(){
+    (pos -> y)++;
+}
+void objPos::decY(){
+    (pos -> y)--;
+}
+// Destructor 
+objPos::~objPos(){
+    delete(pos);
+    pos = NULL;
+}
+
