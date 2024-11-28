@@ -11,7 +11,6 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
-bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -20,6 +19,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
+bool exitorlose;
 Player* player;
 GameMechs* game;
 Food* foodPos;
@@ -31,7 +31,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(game->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -54,7 +54,6 @@ void Initialize(void)
     foodPos = new Food(game, player -> getPlayerPos());
     
 
-    exitFlag = false;
     startTime = std::chrono::steady_clock::now();
 }
 
@@ -63,7 +62,8 @@ void GetInput(void)
    if(MacUILib_hasChar()){
         game->setInput(MacUILib_getChar());
         if(game->getInput()==' '){
-            exitFlag = true;
+            game -> setExitTrue();
+            exitorlose = false;
     }
         
     }
@@ -121,8 +121,10 @@ void DrawScreen(void) {
     MacUILib_printf("The snake can't collide with itself    |    Food Position: (%d, %d)         \n",((foodPos -> getFoodPos()).pos)-> x,((foodPos -> getFoodPos()).pos)-> y);       
     MacUILib_printf("Press space to exit                    |    Elasped Time: %d seconds        \n", elapsedSeconds);
     MacUILib_printf("============================================================================="   );
-    if(game -> getExitFlagStatus() == true||game -> getLoseFlagStatus() == true){
-        exitFlag = 1;
+
+    if(game -> getLoseFlagStatus() == true){
+        exitorlose = true;
+        game->setExitTrue();
     }
 }
  
@@ -137,10 +139,25 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();    
     auto currentTime = std::chrono::steady_clock::now();
-
-    MacUILib_printf("-------------Thanks for Playing-------------\n");
-    MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
-    MacUILib_printf(
+    if(exitorlose == false){
+        MacUILib_printf("-------------Thanks for Playing!------------\n");
+        MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
+        MacUILib_printf(
+                    " __  __      __  __           _               \n"
+                    "|  \\/  | ___|  \\/  | __ _ ___| |_ ___ _ __    \n"
+                    "| |\\/| |/ __| |\\/| |/ _` / __| __/ _ \\ '__|   \n"
+                    "| |  | | (__| |  | | (_| \\__ \\ ||  __/ |      \n"
+                    "|_|  |_|\\___|_|  |_|\\__,_|___/\\__\\___|_|      \n"
+                    "| | | |_ __ (_)_   _____ _ __ ___(_) |_ _   _ \n"
+                    "| | | | '_ \\| \\ \\ / / _ \\ '__/ __| | __| | | |\n"
+                    "| |_| | | | | |\\ V /  __/ |  \\__ \\ | |_| |_| |\n"
+                    " \\___/|_| |_|_| \\_/ \\___|_|  |___/_|\\__|\\__, |\n"
+        "                                        |___/  \n"
+    );}
+    else if(exitorlose == true){
+        MacUILib_printf("-------You Lost! Better Luck Next Time.-------\n");
+        MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
+        MacUILib_printf(
                     " __  __      __  __           _               \n"
                     "|  \\/  | ___|  \\/  | __ _ ___| |_ ___ _ __    \n"
                     "| |\\/| |/ __| |\\/| |/ _` / __| __/ _ \\ '__|   \n"
@@ -152,6 +169,7 @@ void CleanUp(void)
                     " \\___/|_| |_|_| \\_/ \\___|_|  |___/_|\\__|\\__, |\n"
         "                                        |___/  \n"
     );
+    }
     MacUILib_printf("\n");
     MacUILib_printf("\n");
     MacUILib_printf("\n");

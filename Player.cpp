@@ -8,7 +8,7 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     playerPos = new objPosArrayList();
-    objPos start1 = objPos(15,20,'*');
+    objPos start1 = objPos(15,15,'*');
     playerPos -> insertTail(start1);
 
     // more actions to be included
@@ -109,13 +109,13 @@ void Player::movePlayer()
     else if(newHead.pos -> x>=mainGameMechsRef -> getBoardSizeX()-1){
         newHead.pos -> x = 1;
     }
-
     if(newHead.pos -> y<=0){
         newHead.pos -> y = mainGameMechsRef -> getBoardSizeY() -2;
     }
     else if(newHead.pos -> y>=mainGameMechsRef -> getBoardSizeY()-1){
         newHead.pos -> y = 1;
     }
+
     playerPos -> insertHead(newHead);
     playerPos -> removeTail();
     

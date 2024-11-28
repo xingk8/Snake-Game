@@ -37,9 +37,5 @@ objPos const Food::getFoodPos(){
     return foodPos;
 }
 
-bool Food::collisionCheck(objPosArrayList* playerPos){
-    
-    return playerPos -> getElement(0) == foodPos;
-}
 
 

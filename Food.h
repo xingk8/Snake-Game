@@ -13,6 +13,5 @@ class Food{
         ~Food();
 
         void generateFood(objPosArrayList* blockOff);
-        bool collisionCheck(objPosArrayList* playerPos);
         objPos const getFoodPos();
 };

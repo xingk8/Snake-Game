@@ -87,19 +87,6 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos) const
         return 0;
 }
 
-void objPos::incX(){
-    (pos -> x)++;
-}
-
-void objPos::decX(){
-    (pos -> x)--;
-}
-void objPos::incY(){
-    (pos -> y)++;
-}
-void objPos::decY(){
-    (pos -> y)--;
-}
 // Destructor 
 objPos::~objPos(){
     delete(pos);
