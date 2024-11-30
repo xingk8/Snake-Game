@@ -11,6 +11,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
+bool exitorlose;
 
 void Initialize(void);
 void GetInput(void);
@@ -19,7 +20,6 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-bool exitorlose;
 Player* player;
 GameMechs* game;
 Food* foodPos;
@@ -75,11 +75,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     player -> updatePlayerDir();
-    player -> movePlayer();
-    if (player->checkFoodConsumption(foodPos)) {
-        foodPos->generateFood(player->getPlayerPos());
-        player -> increasePlayerLength(foodPos);
-    }
+    player -> movePlayer(foodPos);
 }
 
 void DrawScreen(void) {
@@ -94,34 +90,53 @@ void DrawScreen(void) {
 
             if (x == 0 || x == game->getBoardSizeX() - 1 || y == 0 || y == game->getBoardSizeY() - 1) {
                 MacUILib_printf("#");
-        }   else {
-                bool isSnake = false;
-                for (int i = 0; i < player->getPlayerPos()->getSize(); i++) {
-                    objPos segment = player->getPlayerPos()->getElement(i);
-                    if (x == segment.pos->x && y == segment.pos->y) {
-                        MacUILib_printf("%c", segment.symbol);
-                        isSnake = true;
-                        break;
-                }
-            }
+            }   else {
+                    bool isSnake = false;
+                    for (int i = 0; i < player->getPlayerPos()->getSize(); i++) {
+                        objPos segment = player->getPlayerPos()->getElement(i);
+                        if (x == segment.pos->x && y == segment.pos->y) {
+                            MacUILib_printf("%c", segment.symbol);
+                            isSnake = true;
+                            break;
+                        }
+                    }
                 if (!isSnake) {
-                    if (x == foodPos->getFoodPos().pos->x && y == foodPos->getFoodPos().pos->y) {
-                        MacUILib_printf("%c", foodPos->getFoodPos().symbol);
-                }   else {
-                        MacUILib_printf(" "); 
-                }
+                    bool isFood = false;
+                    for (int i = 0; i < foodPos->getFoodBin()->getSize(); i++){
+                        objPos food = foodPos->getFoodBin()->getElement(i);
+                        if (x == food.pos->x && y == food.pos->y){
+                            MacUILib_printf("%c", food.symbol);
+                            isFood = true;
+                            break;
+                        }
+                    }
+                    if (!isFood){
+                        MacUILib_printf(" ");
+                    }
+
+                }   
             }
         }
+        MacUILib_printf("\n");
     }
-    MacUILib_printf("\n");
-}
+
     MacUILib_printf("===============================2SH4 Snake Game==============================\n");
     MacUILib_printf("----------Instructions----------       |    -----------Game Stats-----------\n");
     MacUILib_printf("Use the W, A, S, D keys to move        |    Score (Food Eaten): %d                       \n",game->getScore());
-    MacUILib_printf("The snake can't collide with itself    |    Food Position: (%d, %d)         \n",((foodPos -> getFoodPos()).pos)-> x,((foodPos -> getFoodPos()).pos)-> y);       
-    MacUILib_printf("Press space to exit                    |    Elasped Time: %d seconds        \n", elapsedSeconds);
-    MacUILib_printf("============================================================================="   );
+    MacUILib_printf("The snake can't collide with itself    |    Elasped Time: %d seconds        \n", elapsedSeconds);  
+    MacUILib_printf("Press space to exit                    |    Food Positions:                 \n"); 
 
+    for (int i = 0; i < foodPos->getFoodBin()->getSize(); i++){
+        objPos food = foodPos->getFoodBin()->getElement(i);
+        if(i==0){
+
+    MacUILib_printf("Food $ gives 5 points                  |    Food %c at (%d,%d)\n", food.symbol, food.pos->x, food.pos->y);} 
+        else if(i==1){   
+    MacUILib_printf("Food o gives 1 point                   |    Food %c at (%d,%d)\n", food.symbol, food.pos->x, food.pos->y);}
+    else{
+    MacUILib_printf("Snake is * and wall is #               |    Food %c at (%d,%d)\n", food.symbol, food.pos->x, food.pos->y);
+    }}
+    MacUILib_printf("============================================================================="   );
     if(game -> getLoseFlagStatus() == true){
         exitorlose = true;
         game->setExitTrue();
@@ -138,7 +153,7 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-    auto currentTime = std::chrono::steady_clock::now();
+
     if(exitorlose == false){
         MacUILib_printf("-------------Thanks for Playing!------------\n");
         MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
