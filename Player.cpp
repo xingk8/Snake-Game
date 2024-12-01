@@ -134,7 +134,6 @@ void Player::movePlayer(Food* food) {
 
     for (int i = 1; i < playerPos->getSize(); i++) { 
         if (playerPos -> getHeadElement() == playerPos->getElement(i)) {
-            mainGameMechsRef->setExitTrue(); 
             mainGameMechsRef->setLoseFlag(); 
         }
     }

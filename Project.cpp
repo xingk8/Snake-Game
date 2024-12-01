@@ -11,7 +11,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
-bool exitorlose;
+
 
 void Initialize(void);
 void GetInput(void);
@@ -31,7 +31,7 @@ int main(void)
 
     Initialize();
 
-    while(game->getExitFlagStatus() == false)  
+    while(game->getExitFlagStatus() == false && game->getLoseFlagStatus() == false) // stop running when you lose or want to exit 
     {
         GetInput();
         RunLogic();
@@ -64,7 +64,6 @@ void GetInput(void)
         game->setInput(MacUILib_getChar());
         if(game->getInput()==' '){
             game -> setExitTrue();
-            exitorlose = false;
     }
         
     }
@@ -138,10 +137,7 @@ void DrawScreen(void) {
     MacUILib_printf("Snake is * and wall is #               |    Food %c at (%d,%d)\n", food.symbol, food.pos->x, food.pos->y);
     }}
     MacUILib_printf("============================================================================="   );
-    if(game -> getLoseFlagStatus() == true){
-        exitorlose = true;
-        game->setExitTrue();
-    }
+    
 }
  
 
@@ -155,7 +151,8 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();    
 
-    if(exitorlose == false){
+    // different outputs depending on whether you lost or exited 
+    if(game->getExitFlagStatus() ==true){
         MacUILib_printf("-------------Thanks for Playing!------------\n");
         MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
         MacUILib_printf(
@@ -170,7 +167,7 @@ void CleanUp(void)
                     " \\___/|_| |_|_| \\_/ \\___|_|  |___/_|\\__|\\__, |\n"
         "                                        |___/  \n"
     );}
-    else if(exitorlose == true){
+    else if(game -> getLoseFlagStatus() == true){
         MacUILib_printf("-------You Lost! Better Luck Next Time.-------\n");
         MacUILib_printf("Kun Xing                    Ibtisam Alhasoon\n");
         MacUILib_printf(
