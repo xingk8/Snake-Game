@@ -139,13 +139,15 @@ void Player::movePlayer(Food* food) {
         }
     }
 }
-
+// Check if food has been eaten 
 bool Player::checkFoodConsumption(Food* foodObj) {
     objPos head = playerPos->getHeadElement(); 
+    // bool for special food to determine how to increment score
     bool specialFoodEaten = false;
     return foodObj->collisionCheck(playerPos, specialFoodEaten); 
 }
 
+// increase the player length while increasing the score
 void Player::increasePlayerLength(){
     objPos currentHead = playerPos -> getHeadElement();
     objPos newHead = currentHead;

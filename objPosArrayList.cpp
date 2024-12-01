@@ -38,6 +38,7 @@ objPosArrayList& objPosArrayList::operator=(const objPosArrayList &obj){
     return *this;
 }
 
+// double size function to increase array list size when the list is full
 void objPosArrayList::doubleSize(){
     arrayCapacity *= 2;
     objPos* temp = new objPos[arrayCapacity];
@@ -60,7 +61,7 @@ int objPosArrayList::getSize() const
 }
 
 void objPosArrayList::insertHead(objPos thisPos)
-{
+{   // double size is list is full 
     if(listSize == arrayCapacity){
         doubleSize();}
 

@@ -39,7 +39,8 @@ objPos& objPos::operator=(const objPos &position){
         pos -> y = position.pos -> y;}
     return *this; 
 }
- 
+
+//set a defined definition for == when comparing objPos objects that compares the x and y values (not symbols) and returns a bool depending on if theyre the same or not
 bool objPos::operator==(const objPos &other){
      return this->pos->x == other.pos->x &&
             this->pos->y == other.pos->y;

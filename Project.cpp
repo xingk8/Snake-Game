@@ -42,8 +42,9 @@ int main(void)
     CleanUp();
 
 }
-
+// to calculate elasped time
 std::chrono::time_point<std::chrono::steady_clock> startTime;
+
 void Initialize(void)
 {
     MacUILib_init();

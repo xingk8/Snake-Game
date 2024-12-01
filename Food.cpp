@@ -49,7 +49,7 @@ void Food::generateFood(objPosArrayList* blockOff, int numFood, int numSpecialFo
 objPosArrayList* Food::getFoodBin(){
     return &foodBin;
 }
-
+// Check if collided with food (mentioned in manual but player uses this function instead)
 bool Food::collisionCheck(objPosArrayList* playerPos, bool& specialFoodEaten){
     objPos snakeHead = playerPos->getHeadElement();
     for (int i = 0; i < foodBin.getSize(); i++){
