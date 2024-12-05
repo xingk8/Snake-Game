@@ -56,7 +56,7 @@ int GameMechs::getBoardSizeX() const
 {
     return boardSizeX;
 }
-
+ 
 int GameMechs::getBoardSizeY() const
 {
     return boardSizeY;
