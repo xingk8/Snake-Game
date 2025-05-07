@@ -2,9 +2,6 @@
 # COE2SH4 - Course Project Template
 Course Project
 
-You must watch the briefing video and read through the manual to engage in the development activities.
-
-
 Section: C01
 
 Team Information
@@ -13,3 +10,19 @@ Member 1 StudentID: [400460968]
 
 Member 2 MacID: [alhasooi]
 Member 2 StudentID: [400518596]
+
+# 🐍 Snake Game
+
+A classic Snake Game implemented as part of a personal/academic programming project. The game features real-time control, collision detection, and score tracking in a simple and interactive interface.
+
+## 🎮 Features
+
+- Real-time snake movement using keyboard controls (A, S, W, D)
+- Food spawning at random locations
+- Score display and live updates
+- Game-over detection on collision with walls or the snake’s own body
+- Customizable grid size or speed (if included)
+
+## 🛠 Technologies Used
+
+- Language: C/C++
